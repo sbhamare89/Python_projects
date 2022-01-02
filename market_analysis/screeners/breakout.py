@@ -68,7 +68,7 @@ tickers = (nse.pre_market_data())
 
 end_date = dt.datetime.today().strftime('%d%m%Y')
 # checks for last 15 days history data
-previous_date = dt.datetime.today() - dt.timedelta(days=100)
+previous_date = dt.datetime.today() - dt.timedelta(days=120)
 start_date = previous_date.strftime('%d%m%Y')
 print('Current date :' + str(end_date))
 print('Previous date :' + str(start_date))

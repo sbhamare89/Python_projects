@@ -42,7 +42,8 @@ class NseIndia:
         def gather(symbol):
             tick = symbol.upper().replace(' ','%20').replace('&', '%26')
             df = nsepy.get_history(tick, date_start_obj, date_end_obj)
-            df = df.drop(['Series','Prev Close','Last','VWAP','Volume','Turnover','Trades','%Deliverble'], axis=1)
+#            df = df.drop(['Series','Prev Close','Last','VWAP','Volume','Turnover','Trades','%Deliverble'], axis=1)
+            df = df[['Date','Symbol','Open','High','Low','Close','Deliverable Volume']]
             df.to_csv("daily_csv/{}.csv".format(symbol.upper()))
             print("Saved data for {}".format(symbol.upper()))
         
