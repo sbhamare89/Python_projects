@@ -21,6 +21,8 @@ downtrend = []
 downtrend_broke = []
 hns = []
 ihns = []
+risingtriangle = []
+fallingtriangle = []
 
 for filename in os.listdir("daily_csv"):
     f = os.path.join("daily_csv", filename)
@@ -41,6 +43,13 @@ for filename in os.listdir("daily_csv"):
             LC = float(df['Close'].tail(1).iloc[0])
             
             filename = filename.split('.')[0]
+           
+            if ( HH1 < float( HH2 * 1.02 )) and ( HH1 > float ( HH2 * 0.98 )) and ( HH1 < float( HH3 * 1.02 )) and ( HH1 > float ( HH3 * 0.98 )) and ( HH1 < float( HH3 * 1.02 )) and ( HH1 > float ( HH3 * 0.98 )) and (LH1 > LH2 > LH3):
+                risingtriangle.append(filename)
+                
+            if ( LH1 < float( LH2 * 1.02 )) and ( LH1 > float ( LH2 * 0.98 )) and ( LH1 < float( LH3 * 1.02 )) and ( LH1 > float ( LH3 * 0.98 )) and ( LH1 < float( LH3 * 1.02 )) and ( LH1 > float ( LH3 * 0.98 )) and (HH1 < HH2 < HH3):
+                fallingtriangle.append(filename)
+
            
             if (HH1 > HH2) and (HH2 > HH3) and (HH3 > HH4) and (HH4 > HH5):
                 uptrend.append(filename)
@@ -105,6 +114,16 @@ print("-----------------------------------------------------------")
 
 print("Triangle Pattern : ")
 print(triangle)
+
+print("-----------------------------------------------------------")
+
+print("Rising triangle Pattern : ")
+print(risingtriangle)
+
+print("-----------------------------------------------------------")
+
+print("Falling triangle Pattern : ")
+print(fallingtriangle)
 
 print("-----------------------------------------------------------")
 
