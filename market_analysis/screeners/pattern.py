@@ -49,7 +49,6 @@ for filename in os.listdir("daily_csv"):
                 
             if ( LH1 < float( LH2 * 1.02 )) and ( LH1 > float ( LH2 * 0.98 )) and ( LH1 < float( LH3 * 1.02 )) and ( LH1 > float ( LH3 * 0.98 )) and ( LH1 < float( LH3 * 1.02 )) and ( LH1 > float ( LH3 * 0.98 )) and (HH1 < HH2 < HH3):
                 fallingtriangle.append(filename)
-
            
             if (HH1 > HH2) and (HH2 > HH3) and (HH3 > HH4) and (HH4 > HH5):
                 uptrend.append(filename)
