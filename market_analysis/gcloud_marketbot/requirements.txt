@@ -1,0 +1,8 @@
+functions-framework==3.*
+requests
+pandas
+futures3
+datetime
+time
+pyTelegramBotAPI
+schedule
