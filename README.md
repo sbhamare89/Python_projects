@@ -16,7 +16,7 @@ Uptrend line
 Uptrend line broken (bearish reversal)
 
 
-+ master : Python_projects/market_analysis/screeners/pattern.py
++ master : ~/market_analysis/screeners/pattern.py
 
 Take moment to look into below attachments for few glimpse of program output and actual structure formed on charts.
 
