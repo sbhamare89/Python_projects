@@ -22,7 +22,7 @@ downtrend_broke = []
 hns = []
 ihns = []
 
-for filename in os.listdir("/home/xlr8/Documents/Python_projects/market_analysis/daily_csv"):
+for filename in os.listdir("daily_csv"):
     f = os.path.join("daily_csv", filename)
     if os.path.isfile(f):
         try:
