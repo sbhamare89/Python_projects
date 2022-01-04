@@ -37,14 +37,24 @@ class NseIndia:
             new_data.append(i["metadata"])
         df = pd.DataFrame(new_data)
         tickers = list(df['symbol'])
-        #tickers = ["IL&FSENGG", "M&MFIN"]
+        # tickers = ["TCS"]
         
         def gather(symbol):
+            
+            FRAME = "Daily"
+            FRAME = "Weekly"
             tick = symbol.upper().replace(' ','%20').replace('&', '%26')
             df = nsepy.get_history(tick, date_start_obj, date_end_obj)
-            df = df.drop(['Series','Prev Close','Last','VWAP','Volume','Turnover','Trades','%Deliverble'], axis=1)
+            df = df.drop(['Series','Prev Close','Last','VWAP','Turnover','Trades','%Deliverble'], axis=1)
 #            df = df['Date', 'Symbol', 'Open', 'High', 'Low', 'Close', 'Deliverable Volume']
-            df.to_csv("daily_csv/{}.csv".format(symbol.upper()))
+
+            if FRAME == "Weekly":
+                df['Date'] = pd.to_datetime(df.index)
+                df.set_index('Date', inplace=True)
+                df = df.resample('W').agg({'Open': 'first', 'High':'max', 'Low':'min', 'Close': 'last', 'Volume': 'sum' ,'Deliverable Volume':'sum'})
+                df['DeliverablePct'] = ( df['Deliverable Volume'] / df['Volume'] ) * 100
+                
+            df.to_csv("/home/xlr8/Documents/Python_projects/market_analysis/screeners/daily_csv/{}.csv".format(symbol.upper()))
             print("Saved data for {}".format(symbol.upper()))
         
         try:
