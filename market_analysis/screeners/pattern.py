@@ -9,7 +9,7 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
 
 #candal window size to check means
-wsize = -20
+wsize = -10
 
 triangle = []
 double_top = []
