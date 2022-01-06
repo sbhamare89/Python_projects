@@ -36,7 +36,7 @@ class NseIndia:
         for i in data:
             new_data.append(i["metadata"])
         df = pd.DataFrame(new_data)
-        tickers = list(df['symbol'])
+        tickers = list(df['symbol']).sort()
         # tickers = ["TCS"]
         
         def gather(symbol):
