@@ -28,12 +28,10 @@ for filename in os.listdir("/home/xlr8/Documents/Python_projects/market_analysis
             if df['Trade'].iloc[-1] != df['Trade'].iloc[-2]:
                 if df['Trade'].iloc[-1] == 'LONG':
                     LONG.append(filename)
-                    print(df,filename)
                     if df['ADL'].iloc[[-1]] > df['ADL'].iloc[[-2]]:
                         LConfirmed.append()
                 if df['Trade'].iloc[-1] == 'SHORT':
                     SHORT.append(filename)
-                    print(df,filename)
                     if df['ADL'].iloc[[-1]] < df['ADL'].iloc[[-2]]:
                         SConfirmed.append()
         except:
