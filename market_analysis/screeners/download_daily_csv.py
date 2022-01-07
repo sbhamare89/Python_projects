@@ -36,7 +36,7 @@ class NseIndia:
         for i in data:
             new_data.append(i["metadata"])
         df = pd.DataFrame(new_data)
-        tickers = list(df['symbol']).sort()
+        tickers = list(df['symbol'])
         # tickers = ["TCS"]
         
         def gather(symbol):
@@ -52,8 +52,6 @@ class NseIndia:
                 df['Date'] = pd.to_datetime(df.index)
                 df.set_index('Date', inplace=True)
                 df = df.resample('W').agg({'Open': 'first', 'High':'max', 'Low':'min', 'Close': 'last', 'Volume': 'sum' ,'Deliverable Volume':'sum'})
-                df['DeliverablePct'] = ( df['Deliverable Volume'] / df['Volume'] ) * 100
-                
             df.to_csv("/home/xlr8/Documents/Python_projects/market_analysis/screeners/daily_csv/{}.csv".format(symbol.upper()))
             print("Saved data for {}".format(symbol.upper()))
         
