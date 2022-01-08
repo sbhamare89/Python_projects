@@ -4,6 +4,7 @@ import pandas as pd
 import requests
 import concurrent.futures
 import os
+from decouple import config
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
@@ -32,8 +33,8 @@ def is_breaking_out(df,percentage=5):
     
     return False
 
-for filename in os.listdir("daily_csv"):
-    f = os.path.join("daily_csv", filename)
+for filename in os.listdir(config('CSV_DIR')):
+    f = os.path.join(config('CSV_DIR'), filename)
     if os.path.isfile(f):
         try:
             df = pd.read_csv(f)

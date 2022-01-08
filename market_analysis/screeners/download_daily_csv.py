@@ -3,6 +3,7 @@ import datetime as dt
 import pandas as pd
 import requests
 import concurrent.futures
+from decouple import config
 #import time, schedule
 
 pd.set_option('display.max_rows', None)
@@ -42,7 +43,7 @@ class NseIndia:
         def gather(symbol):
             
             FRAME = "Daily"
-            FRAME = "Weekly"
+#            FRAME = "Weekly"
             tick = symbol.upper().replace(' ','%20').replace('&', '%26')
             df = nsepy.get_history(tick, date_start_obj, date_end_obj)
             df = df.drop(['Series','Prev Close','Last','VWAP','Turnover','Trades','%Deliverble'], axis=1)
@@ -52,7 +53,9 @@ class NseIndia:
                 df['Date'] = pd.to_datetime(df.index)
                 df.set_index('Date', inplace=True)
                 df = df.resample('W').agg({'Open': 'first', 'High':'max', 'Low':'min', 'Close': 'last', 'Volume': 'sum' ,'Deliverable Volume':'sum'})
-            df.to_csv("/home/xlr8/Documents/Python_projects/market_analysis/screeners/daily_csv/{}.csv".format(symbol.upper()))
+
+#            df.to_csv("/home/xlr8/Documents/Python_projects/market_analysis/screeners/daily_csv/{}.csv".format(symbol.upper()))
+            df.to_csv(config('CSV_DIR') + "/{}.csv".format(symbol.upper()))
             print("Saved data for {}".format(symbol.upper()))
         
         try:

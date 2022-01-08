@@ -3,13 +3,15 @@
 import os
 from numpy import float64, half, number
 import pandas as pd
+from pandas.core.tools.datetimes import DatetimeScalarOrArrayConvertible
+from decouple import config
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
 
 #candal window size to check means
-wsize = -10
+wsize = -50
 
 triangle = []
 double_top = []
@@ -24,12 +26,19 @@ ihns = []
 risingtriangle = []
 fallingtriangle = []
 
-for filename in os.listdir("daily_csv"):
-    f = os.path.join("daily_csv", filename)
+FRAME = "DAILY"
+FRAME = "WEEKLY"
+
+for filename in os.listdir(config('CSV_DIR')):
+    f = os.path.join(config('CSV_DIR'), filename)
     if os.path.isfile(f):
         try:
             df = pd.read_csv(f)
-            
+            # if FRAME == "WEEKLY":
+            #     df['Date'] = pd.to_datetime(df.index)
+            #     df.set_index('Date', inplace=True)
+            #     df = df.resample('W').agg({'Open': 'first', 'High':'max', 'Low':'min', 'Close': 'last', 'Volume': 'sum' ,'Deliverable Volume':'sum'})
+
             HH1 = float(df.iloc[wsize:]['High'].to_frame().max())
             HH2 = float(df.iloc[wsize*2:wsize]['High'].to_frame().max())
             HH3 = float(df.iloc[wsize*3:wsize*2]['High'].to_frame().max())
