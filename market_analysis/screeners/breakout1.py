@@ -1,8 +1,5 @@
-import nsepy
 import datetime as dt
 import pandas as pd
-import requests
-import concurrent.futures
 import os
 from decouple import config
 
@@ -18,6 +15,7 @@ breakout = []
 def is_consolidating(df_obj,percentage=5):
     max_close = df_obj['Close'].max()
     min_close = df_obj['Close'].min()
+#    print("{} : max close {} and min close {}".format(tick, max_close, min_close))
     threshold = 1 - (percentage / 100)
     if min_close > (max_close * threshold):
         return True
@@ -37,11 +35,13 @@ for filename in os.listdir(config('CSV_DIR')):
     f = os.path.join(config('CSV_DIR'), filename)
     if os.path.isfile(f):
         try:
+            filename = filename.split('.')[0]
             df = pd.read_csv(f)
+            df = df.tail(25)
             if is_consolidating(df):
-                conso.append(df['Symbol'].values[0])
+                conso.append(filename)
             if is_breaking_out(df):
-                breakout.append(df['Symbol'].values[0])
+                breakout.append(filename)
         except:
             pass
 
