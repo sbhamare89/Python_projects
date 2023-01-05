@@ -1,3 +1,7 @@
+# if you are running this programm first time kindly install all required modules in python3 from requirments.txt file
+# after that edit .env file and make necessary changes in path to store your daily downloaded csv files
+
+
 import nsepy
 import datetime as dt
 import pandas as pd
@@ -11,7 +15,6 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
 
 tickers = ["ALKEM", "TCS", "WABCOINDIA", "INFY"]
-
 
 end_date = dt.datetime.today().strftime('%d%m%Y')
 previous_date = dt.datetime.today() - dt.timedelta(days=500)
@@ -39,7 +42,6 @@ class NseIndia:
         df = pd.DataFrame(new_data)
         tickers = list(df['symbol'])
         # tickers = ["TCS"]
-        
         def gather(symbol):
             
             FRAME = "Daily"
@@ -48,12 +50,10 @@ class NseIndia:
             df = nsepy.get_history(tick, date_start_obj, date_end_obj)
             df = df.drop(['Series','Prev Close','Last','VWAP','Turnover','Trades','%Deliverble'], axis=1)
 #            df = df['Date', 'Symbol', 'Open', 'High', 'Low', 'Close', 'Deliverable Volume']
-
             if FRAME == "Weekly":
                 df['Date'] = pd.to_datetime(df.index)
                 df.set_index('Date', inplace=True)
                 df = df.resample('W').agg({'Open': 'first', 'High':'max', 'Low':'min', 'Close': 'last', 'Volume': 'sum' ,'Deliverable Volume':'sum'})
-
 #            df.to_csv("/home/xlr8/Documents/Python_projects/market_analysis/screeners/daily_csv/{}.csv".format(symbol.upper()))
             df.to_csv(config('CSV_DIR') + "/{}.csv".format(symbol.upper()))
             print("Saved data for {}".format(symbol.upper()))

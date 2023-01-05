@@ -3,7 +3,7 @@
 import os
 from numpy import float64, half, number
 import pandas as pd
-from pandas.core.tools.datetimes import DatetimeScalarOrArrayConvertible
+#from pandas.core.tools.datetimes import DatetimeScalarOrArrayConvertible
 from decouple import config
 
 pd.set_option('display.max_rows', None)

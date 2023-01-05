@@ -1,0 +1,8 @@
+nsepy
+pandas
+requests
+futures
+datetime
+config
+python-decouple
+#pandas.core.tools.datetimes
