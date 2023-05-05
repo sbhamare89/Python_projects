@@ -4,11 +4,20 @@ import datetime
 from tqdm import tqdm
 import json
 
-# Set the namespace where you want to restart pods
-NAMESPACE = "default"
+# Print script information for the user
+print("This script will delete all the healthy pods in a given namespace in batches and then wait for them to restart.")
+print("You can set the batch size and sleep interval between batches to customize the script behavior.")
 
-# Set the batch size
-BATCH_SIZE = 5
+# Get the namespace where you want to restart pods
+NAMESPACE = input("Enter the namespace where you want to restart pods (default): ").strip() or "default"
+
+# Get the batch size for deleting pods
+batch_size = input("Enter the batch size for deleting pods (5): ").strip() or "5"
+BATCH_SIZE = int(batch_size)
+
+# Get the sleep interval between batches
+sleep_interval = input("Enter the sleep interval between batches in seconds (5): ").strip() or "5"
+SLEEP_INTERVAL = int(sleep_interval)
 
 # Generate a unique log file name based on the current date and time
 now = datetime.datetime.now()
@@ -46,7 +55,7 @@ for i in tqdm(range(num_batches), desc="Deleting pods", total=num_batches):
     os.system(cmd)
 
     # Wait for the pods to be terminated
-    time.sleep(5)
+    time.sleep(SLEEP_INTERVAL)
 
     # Calculate the number of pods that have been restarted so far
     num_restarted_pods += len(pod_list_to_delete)
