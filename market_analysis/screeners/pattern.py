@@ -5,6 +5,8 @@ from numpy import float64, half, number
 import pandas as pd
 #from pandas.core.tools.datetimes import DatetimeScalarOrArrayConvertible
 from decouple import config
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)

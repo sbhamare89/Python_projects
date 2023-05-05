@@ -34,7 +34,7 @@ class NseIndia:
 
         pre_market_key = {"NIFTY 50": "NIFTY", "Nifty Bank": "BANKNIFTY", "Emerge": "SME", "Securities in F&O": "FO",
                           "Others": "OTHERS", "All": "ALL"}
-        key = "ALL"   # input
+        key = "All"   # input
         data = self.session.get(f"https://www.nseindia.com/api/market-data-pre-open?key={pre_market_key[key]}", headers=self.headers).json()["data"]
         new_data = []
         for i in data:
