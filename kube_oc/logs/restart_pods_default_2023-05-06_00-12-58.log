@@ -1,2 +1,0 @@
-2023-05-06 00:12:58.406911: Deleting pods: ['test-deployment-bc8496f47-4g4sj', 'test-deployment-bc8496f47-58x7b', 'test-deployment-bc8496f47-5sfd2', 'test-deployment-bc8496f47-76pmf', 'test-deployment-bc8496f47-hm4cx']
-2023-05-06 00:13:07.110864: Deleting pods: ['test-deployment-bc8496f47-r5p89', 'test-deployment-bc8496f47-rssww', 'test-deployment-bc8496f47-w8srj', 'test-deployment-bc8496f47-wvlbb', 'test-deployment-bc8496f47-wzgwv']

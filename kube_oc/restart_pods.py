@@ -19,6 +19,33 @@ BATCH_SIZE = int(batch_size)
 sleep_interval = input("Enter the sleep interval between batches in seconds (5): ").strip() or "5"
 SLEEP_INTERVAL = int(sleep_interval)
 
+# Display the parameters passed by the user
+print(f"\nThe script will use the following parameters:")
+print(f"Namespace: {NAMESPACE}")
+print(f"Batch size: {BATCH_SIZE}")
+print(f"Sleep interval: {SLEEP_INTERVAL} seconds")
+
+# Prompt the user for confirmation
+confirmation = input("\nAre you sure you want to proceed? (y/n/c): ").strip().lower()
+while confirmation != "y":
+    if confirmation == "n":
+        print("Script execution aborted by the user.")
+        exit()
+    elif confirmation == "c":
+        # Give the user the option to change the parameters
+        NAMESPACE = input("Enter the namespace where you want to restart pods (default): ").strip() or "default"
+        batch_size = input("Enter the batch size for deleting pods (5): ").strip() or "5"
+        BATCH_SIZE = int(batch_size)
+        sleep_interval = input("Enter the sleep interval between batches in seconds (5): ").strip() or "5"
+        SLEEP_INTERVAL = int(sleep_interval)
+        print(f"\nThe script will use the following parameters:")
+        print(f"Namespace: {NAMESPACE}")
+        print(f"Batch size: {BATCH_SIZE}")
+        print(f"Sleep interval: {SLEEP_INTERVAL} seconds")
+    else:
+        print("Invalid input. Please enter 'y' to proceed, 'n' to abort, or 'c' to change the parameters.")
+    confirmation = input("\nAre you sure you want to proceed? (y/n/c): ").strip().lower()
+
 # Generate a unique log file name based on the current date and time
 now = datetime.datetime.now()
 DATE = now.strftime("%Y-%m-%d_%H-%M-%S")
@@ -51,7 +78,6 @@ for i in tqdm(range(num_batches), desc="Deleting pods", total=num_batches):
 
     # Delete the pods
     cmd = f"kubectl delete pods -n {NAMESPACE} {' '.join(pod_list_to_delete)}"
-    print(f"Running command : {cmd}")
     os.system(cmd)
 
     # Wait for the pods to be terminated
@@ -61,8 +87,9 @@ for i in tqdm(range(num_batches), desc="Deleting pods", total=num_batches):
     num_restarted_pods += len(pod_list_to_delete)
 
     # Print the status message with the progress bar, pod names, and pod counts
-    tqdm.write(f"Restarted {num_restarted_pods}/{num_pods} pods: {pod_list_to_delete}.")
+    tqdm.write(f"Restarted {num_restarted_pods}/{num_pods} pods.")
 
 # Print the log file contents to the terminal
 with open(LOG_FILE, "r") as log_file:
+    print(f"\nKindly find contents of log file {LOG_FILE}:")
     print(log_file.read())
